@@ -1,32 +1,47 @@
-const menu = document.querySelector('.menu');
-const closeBtn = document.querySelector('.menu .menu_btn');
 
-function openMenu(){
-    closeBtn.style.display="block";
-    menu.style.width='100%'
-    document.body.style.overflow="hidden"
-}
+const body = document.querySelector("body"),
+      nav = document.querySelector("nav"),
+      modeToggle = document.querySelector(".dark-light"),
+      searchToggle = document.querySelector(".searchToggle"),
+      sidebarOpen = document.querySelector(".sidebarOpen"),
+      siderbarClose = document.querySelector(".siderbarClose");
 
-function closeMenu(){
-    closeBtn.style.display="none";
-    menu.style.width='0%'
-    document.body.style.overflow="auto"
-}
+      let getMode = localStorage.getItem("mode");
+          if(getMode && getMode === "dark-mode"){
+            body.classList.add("dark");
+          }
 
-const illusion = document.getElementsByTagName('body')[0];
-const darkMode = document.getElementById('dark-change');
+// js code to toggle dark and light mode
+      modeToggle.addEventListener("click" , () =>{
+        modeToggle.classList.toggle("active");
+        body.classList.toggle("dark");
 
-darkMode.addEventListener('click' , function(){
-    darkMode.classList.toggle('active');    
-    illusion.classList.toggle('night');   
-})
+        // js code to keep user selected mode even page refresh or file reopen
+        if(!body.classList.contains("dark")){
+            localStorage.setItem("mode" , "light-mode");
+        }else{
+            localStorage.setItem("mode" , "dark-mode");
+        }
+      });
 
-
-const kaleidoscope = document.getElementById('kaleidoscope')
-const service = document.querySelector(".lemenu")
-
-kaleidoscope.addEventListener('click',() =>
-{
- service.classList.toggle('mobile-menu')
+// js code to toggle search box
+        searchToggle.addEventListener("click" , () =>{
+        searchToggle.classList.toggle("active");
+      });
+ 
+      
+//   js code to toggle sidebar
+sidebarOpen.addEventListener("click" , () =>{
+    nav.classList.add("active");
 });
+
+body.addEventListener("click" , e =>{
+    let clickedElm = e.target;
+
+    if(!clickedElm.classList.contains("sidebarOpen") && !clickedElm.classList.contains("menu")){
+        nav.classList.remove("active");
+    }
+});
+
+
 
